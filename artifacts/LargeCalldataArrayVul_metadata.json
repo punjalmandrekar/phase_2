@@ -44,6 +44,25 @@
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "_numbers",
+						"type": "uint256[]"
+					}
+				],
+				"name": "safeProcessing",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "totalProcessed",
 				"outputs": [
@@ -70,7 +89,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			".git/phase_2/31.sol": "LargeCalldataArray"
+			".git/phase_2/31.sol": "LargeCalldataArrayVul"
 		},
 		"evmVersion": "osaka",
 		"libraries": {},

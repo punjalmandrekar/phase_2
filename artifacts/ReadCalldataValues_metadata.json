@@ -6,46 +6,21 @@
 	"output": {
 		"abi": [
 			{
-				"inputs": [
-					{
-						"internalType": "uint256[]",
-						"name": "_numbers",
-						"type": "uint256[]"
-					}
-				],
-				"name": "getArraySize",
+				"inputs": [],
+				"name": "lastMessage",
 				"outputs": [
 					{
-						"internalType": "uint256",
+						"internalType": "string",
 						"name": "",
-						"type": "uint256"
+						"type": "string"
 					}
 				],
-				"stateMutability": "pure",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256[]",
-						"name": "_numbers",
-						"type": "uint256[]"
-					}
-				],
-				"name": "processLargeArray",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "nonpayable",
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
 				"inputs": [],
-				"name": "totalProcessed",
+				"name": "lastNumber",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -54,6 +29,24 @@
 					}
 				],
 				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_number",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "_message",
+						"type": "string"
+					}
+				],
+				"name": "saveInput",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			}
 		],
@@ -70,7 +63,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			".git/phase_2/31.sol": "LargeCalldataArray"
+			".git/phase_2/28.sol": "ReadCalldataValues"
 		},
 		"evmVersion": "osaka",
 		"libraries": {},
@@ -84,12 +77,12 @@
 		"remappings": []
 	},
 	"sources": {
-		".git/phase_2/31.sol": {
-			"keccak256": "0x1647750cb14735deb2dc306ad72bcd01c73007547dc76154eda9a8c34ca5fc73",
+		".git/phase_2/28.sol": {
+			"keccak256": "0x5810b4f903b207b54d6dfba65d26c50a34cf205c599a03147e1e67bc687c1c6b",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://b5b102cee4c6d285bdbd48703d92cbbf4b38b0fd1acf2068a901fcddb9e04c1e",
-				"dweb:/ipfs/QmPrMB9BKDQzVbGg2bx7Ff5rzDPeq3vndmeQwNYcKZztVx"
+				"bzz-raw://81a5e8ba1598141903f529e4506419990ede10b2397d512b8a6a1bd2ccfffbbc",
+				"dweb:/ipfs/QmWkTUcJNrX8fQTvWW8YgfkBrTKQteT4GZ7GFguh3UNyQP"
 			]
 		}
 	},

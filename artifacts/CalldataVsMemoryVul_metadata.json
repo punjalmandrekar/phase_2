@@ -13,7 +13,58 @@
 						"type": "uint256[]"
 					}
 				],
-				"name": "getArraySize",
+				"name": "modifyMemory",
+				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "_numbers",
+						"type": "uint256[]"
+					}
+				],
+				"name": "saveValues",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "storedValues",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "_numbers",
+						"type": "uint256[]"
+					}
+				],
+				"name": "useCalldata",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -32,7 +83,7 @@
 						"type": "uint256[]"
 					}
 				],
-				"name": "processLargeArray",
+				"name": "useMemory",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -40,20 +91,7 @@
 						"type": "uint256"
 					}
 				],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "totalProcessed",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
+				"stateMutability": "pure",
 				"type": "function"
 			}
 		],
@@ -70,7 +108,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			".git/phase_2/31.sol": "LargeCalldataArray"
+			".git/phase_2/30.sol": "CalldataVsMemoryVul"
 		},
 		"evmVersion": "osaka",
 		"libraries": {},
@@ -84,12 +122,12 @@
 		"remappings": []
 	},
 	"sources": {
-		".git/phase_2/31.sol": {
-			"keccak256": "0x1647750cb14735deb2dc306ad72bcd01c73007547dc76154eda9a8c34ca5fc73",
+		".git/phase_2/30.sol": {
+			"keccak256": "0x783fb52e7d036d996ac9bac7b56734f49b5c9d256fda650bce1044eaf59b6224",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://b5b102cee4c6d285bdbd48703d92cbbf4b38b0fd1acf2068a901fcddb9e04c1e",
-				"dweb:/ipfs/QmPrMB9BKDQzVbGg2bx7Ff5rzDPeq3vndmeQwNYcKZztVx"
+				"bzz-raw://d9740a4c649a95eb88386b9defc9f8a41a64700c55b66b24282ef4e14404716a",
+				"dweb:/ipfs/QmcYqtKNfkecBD4MDm5ez9Cj7cerqWPhmkCuKostUvTynb"
 			]
 		}
 	},

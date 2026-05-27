@@ -1,0 +1,65 @@
+{
+	"compiler": {
+		"version": "0.8.34+commit.80d5c536"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "_numbers",
+						"type": "uint256[]"
+					}
+				],
+				"name": "safeModification",
+				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			".git/phase_2/29.sol": "CalldataRestrictionPatched"
+		},
+		"evmVersion": "osaka",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		".git/phase_2/29.sol": {
+			"keccak256": "0x9f4445a06716fed1ff5fd7ab945626e3193d793c4940b87c817b574cb8c76cfd",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://1e52b676612d3362747dc33ff9d099483307547b0f4a0a28317188f02285325f",
+				"dweb:/ipfs/QmRvGvUiBp9tJP4Cwrqzn2dq53KigVT6YCDb3YM48nv8qz"
+			]
+		}
+	},
+	"version": 1
+}
