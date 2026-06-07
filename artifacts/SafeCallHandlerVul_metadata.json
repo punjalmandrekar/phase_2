@@ -7,7 +7,7 @@
 		"abi": [
 			{
 				"inputs": [],
-				"name": "contractBalance",
+				"name": "executionCounter",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -19,16 +19,16 @@
 				"type": "function"
 			},
 			{
-				"inputs": [
+				"inputs": [],
+				"name": "lastData",
+				"outputs": [
 					{
-						"internalType": "address payable",
-						"name": "_receiver",
-						"type": "address"
+						"internalType": "bytes",
+						"name": "",
+						"type": "bytes"
 					}
 				],
-				"name": "dangerousSend",
-				"outputs": [],
-				"stateMutability": "payable",
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -48,26 +48,39 @@
 				"inputs": [
 					{
 						"internalType": "address payable",
-						"name": "_receiver",
+						"name": "_target",
 						"type": "address"
 					}
 				],
-				"name": "sendETH",
+				"name": "safeETHTransfer",
 				"outputs": [],
 				"stateMutability": "payable",
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "totalSent",
-				"outputs": [
+				"inputs": [
 					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
+						"internalType": "address",
+						"name": "_target",
+						"type": "address"
 					}
 				],
-				"stateMutability": "view",
+				"name": "safeFailingCall",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_target",
+						"type": "address"
+					}
+				],
+				"name": "safeFunctionCall",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			}
 		],
@@ -84,7 +97,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			".git/phase_2/64.sol": "ETHSender"
+			".git/phase_2/61.sol": "SafeCallHandlerVul"
 		},
 		"evmVersion": "osaka",
 		"libraries": {},
@@ -98,12 +111,12 @@
 		"remappings": []
 	},
 	"sources": {
-		".git/phase_2/64.sol": {
-			"keccak256": "0xd9555fa4629ddef7e7b033fc9e9b21146702d5452a980083702f60170ca38590",
+		".git/phase_2/61.sol": {
+			"keccak256": "0xcc18e4b3834ae42507843708508d27331ba9ae5ab52c42e1d4584563f57df5ac",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://0987e9fd2ab023d996231904b3f898c74bc0be1f4875a5286e4fa08c9212084c",
-				"dweb:/ipfs/QmevcY9t4WKssSJ3CR7nh5PR1UTiACbYdAcDB82eTYbSA2"
+				"bzz-raw://101b790720302999b09825feb5995ce93e1aa0ef7f51708ba0ed92a45d95dcaa",
+				"dweb:/ipfs/QmdE9V43FsEosQyXjPFFjzpvVUgaRwQT2q9W2XYQfd5jEc"
 			]
 		}
 	},

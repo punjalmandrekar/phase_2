@@ -1,0 +1,77 @@
+{
+	"compiler": {
+		"version": "0.8.34+commit.80d5c536"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"name": "counter",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "failFunction",
+				"outputs": [],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "successFunction",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "receive"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			".git/phase_2/60.sol": "RejectETHVul"
+		},
+		"evmVersion": "osaka",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		".git/phase_2/60.sol": {
+			"keccak256": "0x813786ed770a3d1729238097d973ad5b2ba1ce364aa5f69e5c58191c78c801af",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://09313c947f23195bb6f5fd0778801dc6591fa70a171316c79717fcf0ac2d836e",
+				"dweb:/ipfs/QmbBtwPwRbUXcLR5gaYyaL5LdoEWeE99929uKVHBP1jYUs"
+			]
+		}
+	},
+	"version": 1
+}

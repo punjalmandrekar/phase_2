@@ -6,6 +6,25 @@
 	"output": {
 		"abi": [
 			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "balances",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "contractBalance",
 				"outputs": [
@@ -24,24 +43,23 @@
 						"internalType": "address payable",
 						"name": "_receiver",
 						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_amount",
+						"type": "uint256"
 					}
 				],
-				"name": "dangerousSend",
+				"name": "dangerousWithdraw",
 				"outputs": [],
-				"stateMutability": "payable",
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
 				"inputs": [],
-				"name": "lastSuccess",
-				"outputs": [
-					{
-						"internalType": "bool",
-						"name": "",
-						"type": "bool"
-					}
-				],
-				"stateMutability": "view",
+				"name": "deposit",
+				"outputs": [],
+				"stateMutability": "payable",
 				"type": "function"
 			},
 			{
@@ -50,21 +68,32 @@
 						"internalType": "address payable",
 						"name": "_receiver",
 						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_amount",
+						"type": "uint256"
 					}
 				],
-				"name": "sendETH",
+				"name": "safeWithdraw",
 				"outputs": [],
-				"stateMutability": "payable",
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "totalSent",
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "withdrawn",
 				"outputs": [
 					{
-						"internalType": "uint256",
+						"internalType": "bool",
 						"name": "",
-						"type": "uint256"
+						"type": "bool"
 					}
 				],
 				"stateMutability": "view",
@@ -84,7 +113,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			".git/phase_2/64.sol": "ETHSender"
+			".git/phase_2/60.sol": "DangerousUncheckedCallVul"
 		},
 		"evmVersion": "osaka",
 		"libraries": {},
@@ -98,12 +127,12 @@
 		"remappings": []
 	},
 	"sources": {
-		".git/phase_2/64.sol": {
-			"keccak256": "0xd9555fa4629ddef7e7b033fc9e9b21146702d5452a980083702f60170ca38590",
+		".git/phase_2/60.sol": {
+			"keccak256": "0x813786ed770a3d1729238097d973ad5b2ba1ce364aa5f69e5c58191c78c801af",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://0987e9fd2ab023d996231904b3f898c74bc0be1f4875a5286e4fa08c9212084c",
-				"dweb:/ipfs/QmevcY9t4WKssSJ3CR7nh5PR1UTiACbYdAcDB82eTYbSA2"
+				"bzz-raw://09313c947f23195bb6f5fd0778801dc6591fa70a171316c79717fcf0ac2d836e",
+				"dweb:/ipfs/QmbBtwPwRbUXcLR5gaYyaL5LdoEWeE99929uKVHBP1jYUs"
 			]
 		}
 	},

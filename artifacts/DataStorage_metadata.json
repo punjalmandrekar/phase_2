@@ -7,7 +7,7 @@
 		"abi": [
 			{
 				"inputs": [],
-				"name": "contractBalance",
+				"name": "getNumber",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -19,26 +19,13 @@
 				"type": "function"
 			},
 			{
-				"inputs": [
-					{
-						"internalType": "address payable",
-						"name": "_receiver",
-						"type": "address"
-					}
-				],
-				"name": "dangerousSend",
-				"outputs": [],
-				"stateMutability": "payable",
-				"type": "function"
-			},
-			{
 				"inputs": [],
-				"name": "lastSuccess",
+				"name": "lastCaller",
 				"outputs": [
 					{
-						"internalType": "bool",
+						"internalType": "address",
 						"name": "",
-						"type": "bool"
+						"type": "address"
 					}
 				],
 				"stateMutability": "view",
@@ -47,19 +34,19 @@
 			{
 				"inputs": [
 					{
-						"internalType": "address payable",
-						"name": "_receiver",
-						"type": "address"
+						"internalType": "uint256",
+						"name": "_number",
+						"type": "uint256"
 					}
 				],
-				"name": "sendETH",
+				"name": "setNumber",
 				"outputs": [],
-				"stateMutability": "payable",
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
 				"inputs": [],
-				"name": "totalSent",
+				"name": "storedNumber",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -84,7 +71,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			".git/phase_2/64.sol": "ETHSender"
+			".git/phase_2/63.sol": "DataStorage"
 		},
 		"evmVersion": "osaka",
 		"libraries": {},
@@ -98,12 +85,12 @@
 		"remappings": []
 	},
 	"sources": {
-		".git/phase_2/64.sol": {
-			"keccak256": "0xd9555fa4629ddef7e7b033fc9e9b21146702d5452a980083702f60170ca38590",
+		".git/phase_2/63.sol": {
+			"keccak256": "0x1420f1d4e17e9a980265498e6826863cb681a7ede4a0f44c81f4190dc9ae495d",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://0987e9fd2ab023d996231904b3f898c74bc0be1f4875a5286e4fa08c9212084c",
-				"dweb:/ipfs/QmevcY9t4WKssSJ3CR7nh5PR1UTiACbYdAcDB82eTYbSA2"
+				"bzz-raw://062e29c87df142fb30d93993eb09ce707795527f5a4adaa57379d12f6416de83",
+				"dweb:/ipfs/QmPxHYCZ7TeSEUTrQpUaWBX8yStYoNF1ytT5uAZ36mj997"
 			]
 		}
 	},

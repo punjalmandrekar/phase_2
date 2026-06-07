@@ -6,6 +6,25 @@
 	"output": {
 		"abi": [
 			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "balances",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "contractBalance",
 				"outputs": [
@@ -19,55 +38,23 @@
 				"type": "function"
 			},
 			{
-				"inputs": [
-					{
-						"internalType": "address payable",
-						"name": "_receiver",
-						"type": "address"
-					}
-				],
-				"name": "dangerousSend",
+				"inputs": [],
+				"name": "deposit",
 				"outputs": [],
 				"stateMutability": "payable",
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "lastSuccess",
-				"outputs": [
-					{
-						"internalType": "bool",
-						"name": "",
-						"type": "bool"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
 				"inputs": [
-					{
-						"internalType": "address payable",
-						"name": "_receiver",
-						"type": "address"
-					}
-				],
-				"name": "sendETH",
-				"outputs": [],
-				"stateMutability": "payable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "totalSent",
-				"outputs": [
 					{
 						"internalType": "uint256",
-						"name": "",
+						"name": "_amount",
 						"type": "uint256"
 					}
 				],
-				"stateMutability": "view",
+				"name": "withdraw",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			}
 		],
@@ -84,7 +71,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			".git/phase_2/64.sol": "ETHSender"
+			".git/phase_2/52.sol": "EthTransferMechanicsVul"
 		},
 		"evmVersion": "osaka",
 		"libraries": {},
@@ -98,12 +85,12 @@
 		"remappings": []
 	},
 	"sources": {
-		".git/phase_2/64.sol": {
-			"keccak256": "0xd9555fa4629ddef7e7b033fc9e9b21146702d5452a980083702f60170ca38590",
+		".git/phase_2/52.sol": {
+			"keccak256": "0x1a5f47a97a0c249303c3be84205e87a7c1c63d85292728d4c92af984a4a6a8e7",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://0987e9fd2ab023d996231904b3f898c74bc0be1f4875a5286e4fa08c9212084c",
-				"dweb:/ipfs/QmevcY9t4WKssSJ3CR7nh5PR1UTiACbYdAcDB82eTYbSA2"
+				"bzz-raw://729e3d6fe262746486aa1916456aae9d010dd83c4c2dd10c296d65abde85e131",
+				"dweb:/ipfs/QmbAZRA8PvxhstcbnJBUaW6MBVWJRDsAT2E1pfvU7FXNM8"
 			]
 		}
 	},
