@@ -433,4 +433,165 @@ IMPORTANT CONCEPTS LEARNED
 
 
 
+/*
+AUDIT REPORT
 
+Title:
+Unbounded Loop May Cause Out-of-Gas Denial of Service
+
+Security:
+Medium
+
+Category:
+Denial of Service (DoS)
+Affected Function:
+function dangerousLoop()
+
+Description:
+The function iterates through the entire storage array:
+
+for (
+uint256 i = 0;
+i < data.length;
+i++
+)
+
+The size of the array is controlled through:
+addMany(uint256 n)
+There is no upper bound on the array size.
+As the array grows, gas consumption grows linearly.
+Eventually the transaction may exceed block gas limits and become impossible to execute.
+
+Vulnerable Code:
+
+function dangerousLoop()
+external
+{
+uint256 sum = 0;
+
+for (
+    uint256 i = 0;
+    i < data.length;
+    i++
+) {
+    sum += data[i];
+
+    data[i] = sum;
+}
+
+}
+
+Impact:
+An attacker can continuously increase:
+data.length
+using:
+addMany()
+Once the array becomes sufficiently large:
+dangerousLoop() reverts
+functionality becomes unusable
+protocol experiences denial of service
+
+Proof of Concept:
+Step 1
+
+Call:
+addMany(10000)
+
+Result:
+data.length = 10000
+Step 2
+
+Call:
+dangerousLoop()
+
+Result:
+Very high gas consumption.
+
+Step 3
+Increase array further.
+Step 4
+
+Call:
+dangerousLoop()
+
+Result:
+Out-of-Gas Revert
+
+Root Cause:
+Loop execution depends on:
+data.length
+which has no maximum bound.
+Storage writes are also performed inside the loop:
+data[i] = sum;
+making gas consumption significantly worse.
+
+Recommendation:
+Implement batch processing.
+Process only a limited number of elements per transaction.
+Avoid iterating over the entire storage array in a single call.
+*/
+
+
+//Patch Code
+
+contract OutOfGasDemoPatched {
+
+uint256[] public data;
+
+function addMany(uint256 n)
+    external
+{
+    require(
+        n <= 100,
+        "Batch too large"
+    );
+
+    for (
+        uint256 i = 0;
+        i < n;
+        i++
+    ) {
+        data.push(i);
+    }
+}
+
+function safeBatchProcess(
+    uint256 start,
+    uint256 limit
+)
+    external
+{
+    require(
+        limit <= 100,
+        "Batch too large"
+    );
+
+    uint256 end =
+        start + limit;
+
+    if (end > data.length) {
+        end = data.length;
+    }
+
+    uint256 sum = 0;
+
+    for (
+        uint256 i = start;
+        i < end;
+        i++
+    ) {
+        sum += data[i];
+
+        data[i] = sum;
+    }
+}
+
+function getLength()
+    external
+    view
+    returns (uint256)
+{
+    return data.length;
+}
+
+}
