@@ -20,19 +20,6 @@
 			},
 			{
 				"inputs": [],
-				"name": "getArrayLength",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
 				"name": "loop1000",
 				"outputs": [],
 				"stateMutability": "nonpayable",
@@ -57,25 +44,6 @@
 				],
 				"stateMutability": "view",
 				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"name": "values",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
 			}
 		],
 		"devdoc": {
@@ -91,7 +59,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"phase_2/67.sol": "GasScalingLoop"
+			"phase_2/67.sol": "GasScalingLoopPatched"
 		},
 		"evmVersion": "osaka",
 		"libraries": {},

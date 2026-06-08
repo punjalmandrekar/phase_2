@@ -3,68 +3,62 @@ pragma solidity ^0.8.20;
 
 /*
 =========================================================
-PRACTICAL: Increase loop to 1000 iterations
-CONCEPT: Gas scaling
+PRACTICAL: Store many array values
+CONCEPT: Storage gas cost
 =========================================================
 
 OBJECTIVE
 
-- Learn how gas scales with loop size
-- Understand expensive execution patterns
-- Observe storage-write gas costs
-- Think like auditor about scalability risk
+- Learn why storage is expensive
+- Understand array storage gas scaling
+- Observe gas growth with many writes
+- Think like auditor about storage-heavy logic
 
 ---------------------------------------------------------
 CORE IDEA
 ---------------------------------------------------------
 
-More loop iterations =
-more gas consumption.
+Every storage write costs gas.
 
 ---------------------------------------------------------
 
-Gas usage scales approximately:
-
-LINEARLY
-
-with iteration count.
+Writing MANY array values =
+VERY expensive execution.
 
 ---------------------------------------------------------
 IMPORTANT UNDERSTANDING
 ---------------------------------------------------------
 
-1000 iterations consume MUCH more gas
-than 10 iterations.
+Storage is permanent blockchain data.
 
 ---------------------------------------------------------
 
-Especially when loop contains:
-
-- storage writes
-- external calls
-- memory expansion
+Permanent storage is among the MOST
+expensive EVM operations.
 
 ---------------------------------------------------------
 WHY THIS MATTERS
 ---------------------------------------------------------
 
-Large loops can make contracts:
+Storage-heavy contracts may become:
 
-- unusable
+- too expensive
 - DOS vulnerable
-- too expensive to execute
+- inefficient
+- unscalable
 
 ---------------------------------------------------------
 REAL-WORLD USAGE
 ---------------------------------------------------------
 
-Large loops appear in:
+Storage arrays appear in:
 
+- NFT ownership
+- staking lists
+- governance records
 - reward systems
-- NFT airdrops
-- mass payouts
-- governance processing
-- staking calculations
+- order books
+- protocol accounting
 
 ---------------------------------------------------------
 AUDITOR FOCUS
@@ -72,156 +66,132 @@ AUDITOR FOCUS
 
 Auditors inspect:
 
-- scalability
-- gas complexity
-- unbounded iteration
 - storage-heavy loops
-- DOS possibilities
+- array growth
+- scalability
+- gas DOS risks
+- unnecessary writes
 
 =========================================================
-GAS-SCALING CONTRACT
+STORAGE ARRAY CONTRACT
 =========================================================
 */
 
-contract GasScalingLoop {
+contract StorageGasCost {
 
     /*
-        STORE VALUES
+        LARGE STORAGE ARRAY
     */
-    uint256[] public values;
+    uint256[] public storedValues;
 
     /*
-        TRACK ITERATIONS
+        TRACK TOTAL WRITES
     */
-    uint256 public totalIterations;
+    uint256 public totalWrites;
 
     /*
-        STORE FINAL SUM
+        TRACK FINAL VALUE
     */
-    uint256 public finalSum;
+    uint256 public lastStoredValue;
 
     /*
     =====================================================
-    LOOP 1000 TIMES
+    STORE MANY VALUES
     =====================================================
     */
 
-    function loop1000()
+    function storeManyValues()
         external
     {
 
         /*
-            Temporary local variable.
-
-            Stored in:
-            stack/memory
-
-            NOT persistent storage.
-        */
-        uint256 sum = 0;
-
-        /*
         =================================================
-        LARGE LOOP
+        LOOP 100 TIMES
         =================================================
 
-        Executes:
-        1000 iterations
+        Every iteration performs:
+        STORAGE WRITE.
         */
 
         for (
             uint256 i = 0;
-            i < 1000;
+            i < 100;
             i++
         ) {
 
             /*
             =============================================
-            GAS COST OCCURS HERE
+            VERY EXPENSIVE OPERATION
             =============================================
 
-            Every iteration performs:
-
-            - comparison
-            - arithmetic
-            - increment
-            - storage write
+            Push value into storage array.
             */
 
-            sum += i;
-
-            /*
-                VERY EXPENSIVE.
-
-                Storage write every iteration.
-            */
-            values.push(i);
+            storedValues.push(i);
 
             /*
                 Another storage write.
             */
-            totalIterations++;
-        }
+            totalWrites++;
 
-        /*
-            Final storage write.
-        */
-        finalSum = sum;
+            /*
+                Another storage write.
+            */
+            lastStoredValue = i;
+        }
     }
 
     /*
     =====================================================
-    CHEAPER LOOP
+    CHEAPER MEMORY VERSION
     =====================================================
-
-    No storage writes inside loop.
     */
 
-    function optimizedLoop1000()
+    function useMemoryArray()
         external
+        pure
+        returns (uint256[] memory)
     {
 
         /*
-            Temporary local variable.
+            Memory array exists temporarily.
+
+            MUCH cheaper than storage.
         */
-        uint256 sum = 0;
+        uint256[] memory temp =
+            new uint256[](100);
 
         /*
-            Loop 1000 times.
+            Fill memory array.
         */
         for (
             uint256 i = 0;
-            i < 1000;
+            i < 100;
             i++
         ) {
 
-            /*
-                ONLY arithmetic.
-
-                Much cheaper than storage writes.
-            */
-            sum += i;
+            temp[i] = i;
         }
 
         /*
-            Single storage write at end.
+            Return temporary memory array.
         */
-        finalSum = sum;
+        return temp;
     }
 
     /*
     =====================================================
-    CHECK ARRAY LENGTH
+    GET ARRAY LENGTH
     =====================================================
     */
 
-    function getArrayLength()
+    function getLength()
         external
         view
         returns (uint256)
     {
 
-        return values.length;
+        return storedValues.length;
     }
 }
 
@@ -231,220 +201,206 @@ EXECUTION FLOW
 =========================================================
 
 STEP 1:
-Deploy GasScalingLoop
+Deploy StorageGasCost
 
 =========================================================
 TRACE:
-loop1000()
+storeManyValues()
 =========================================================
 
 STEP 1:
-Function starts.
+Loop starts.
 
 ---------------------------------------------------------
 
-sum = 0
+i = 0
 
 =========================================================
 STEP 2
 =========================================================
 
-Loop initializes:
+Storage write executes:
 
-i = 0
-
-=========================================================
-STEP 3
-=========================================================
-
-Condition checked:
-
-i < 1000
-
----------------------------------------------------------
-
-TRUE
-
-=========================================================
-STEP 4
-=========================================================
-
-Loop body executes.
-
----------------------------------------------------------
-
-sum += i
-
----------------------------------------------------------
-
-values.push(i)
-
----------------------------------------------------------
-
-totalIterations++
+storedValues.push(0)
 
 =========================================================
 IMPORTANT
 =========================================================
 
-Every iteration performs:
+This writes permanently to blockchain storage.
 
 ---------------------------------------------------------
-COMPUTATION
+
+VERY expensive operation.
+
+=========================================================
+STEP 3
+=========================================================
+
+Another storage write:
+
+totalWrites++
+
+=========================================================
+STEP 4
+=========================================================
+
+Another storage write:
+
+lastStoredValue = 0
+
+=========================================================
+STEP 5
+=========================================================
+
+Loop repeats.
+
 ---------------------------------------------------------
 
-AND
+i = 1
+
+=========================================================
+STEP 6
+=========================================================
+
+Again:
 
 ---------------------------------------------------------
-STORAGE WRITES
+
+storedValues.push(1)
+
 ---------------------------------------------------------
+
+totalWrites++
+
+---------------------------------------------------------
+
+lastStoredValue = 1
 
 =========================================================
 LOOP CONTINUES
 =========================================================
 
-Iterations:
+This repeats:
 
----------------------------------------------------------
-0
----------------------------------------------------------
-
-1
-
----------------------------------------------------------
-
-2
-
----------------------------------------------------------
-
-...
-
----------------------------------------------------------
-
-999
-
-=========================================================
-FINAL ITERATION
-=========================================================
-
-After:
-
-i = 999
-
----------------------------------------------------------
-
-i++
-
----------------------------------------------------------
-
-i = 1000
-
-=========================================================
-LOOP EXIT
-=========================================================
-
-Condition checked:
-
-1000 < 1000
-
----------------------------------------------------------
-
-FALSE
-
----------------------------------------------------------
-
-Loop stops.
+100 TIMES.
 
 =========================================================
 FINAL RESULT
 =========================================================
 
 ---------------------------------------------------------
-totalIterations
+storedValues.length
 ---------------------------------------------------------
 
-1000
+100
 
 ---------------------------------------------------------
-values.length
+totalWrites
 ---------------------------------------------------------
 
-1000
+100
 
 ---------------------------------------------------------
-finalSum
+lastStoredValue
 ---------------------------------------------------------
 
-499500
-
-=========================================================
-WHY 499500?
-=========================================================
-
-Formula:
-
-n(n-1)/2
-
----------------------------------------------------------
-
-1000 * 999 / 2
-
----------------------------------------------------------
-
-499500
+99
 
 =========================================================
 IMPORTANT GAS UNDERSTANDING
 =========================================================
 
-Gas usage becomes VERY high because:
+Gas usage becomes VERY HIGH because:
 
 ---------------------------------------------------------
-1000 STORAGE WRITES
+100 STORAGE ARRAY WRITES
 ---------------------------------------------------------
 
 occur.
 
 =========================================================
-MOST EXPENSIVE OPERATION
+MOST EXPENSIVE LINE
 =========================================================
 
-THIS LINE:
+THIS:
 
-values.push(i)
-
----------------------------------------------------------
-
-Storage writes are among
-the MOST expensive EVM operations.
+storedValues.push(i)
 
 =========================================================
-COMPARE FUNCTIONS
+WHY STORAGE IS EXPENSIVE
+=========================================================
+
+Blockchain storage is:
+
+---------------------------------------------------------
+PERMANENT
+---------------------------------------------------------
+
+and
+
+---------------------------------------------------------
+REPLICATED ACROSS ALL NODES
+---------------------------------------------------------
+
+=========================================================
+MEMORY VERSION TRACE
+=========================================================
+
+CALL:
+useMemoryArray()
+
+=========================================================
+
+STEP 1:
+Memory array created.
+
+---------------------------------------------------------
+
+Temporary allocation only.
+
+=========================================================
+STEP 2
+=========================================================
+
+Values stored in memory.
+
+---------------------------------------------------------
+
+NOT permanent blockchain storage.
+
+=========================================================
+STEP 3
+=========================================================
+
+Function returns array.
+
+---------------------------------------------------------
+
+Memory automatically destroyed
+after execution.
+
+=========================================================
+IMPORTANT COMPARISON
 =========================================================
 
 ---------------------------------------------------------
-loop1000()
+STORAGE ARRAY
 ---------------------------------------------------------
 
-VERY expensive
-
----------------------------------------------------------
-
-Reason:
-storage writes inside loop
+- permanent
+- expensive
+- persists on blockchain
 
 =========================================================
 
 ---------------------------------------------------------
-optimizedLoop1000()
+MEMORY ARRAY
 ---------------------------------------------------------
 
-MUCH cheaper
-
----------------------------------------------------------
-
-Reason:
-only one storage write
+- temporary
+- cheaper
+- destroyed after execution
 
 =========================================================
 REMIX TESTING
@@ -458,7 +414,7 @@ TEST 1
 =========================================================
 
 Call:
-loop1000()
+storeManyValues()
 
 ---------------------------------------------------------
 
@@ -470,25 +426,17 @@ STEP 2
 =========================================================
 
 Check:
-getArrayLength()
+getLength()
 
 EXPECTED:
-1000
-
----------------------------------------------------------
-
-Check:
-totalIterations()
-
-EXPECTED:
-1000
+100
 
 =========================================================
 TEST 2
 =========================================================
 
 Call:
-optimizedLoop1000()
+useMemoryArray()
 
 ---------------------------------------------------------
 
@@ -499,20 +447,16 @@ MUCH lower gas usage
 IMPORTANT SECURITY CONCEPT
 =========================================================
 
-Gas scales with:
+Storage growth increases:
 
 ---------------------------------------------------------
-WORK PER ITERATION
+EXECUTION COST
 ---------------------------------------------------------
 
-=========================================================
-VERY IMPORTANT AUDITOR MINDSET
-=========================================================
-
-Loops become dangerous when:
+and
 
 ---------------------------------------------------------
-ITERATION COUNT GROWS
+SCALABILITY RISK
 ---------------------------------------------------------
 
 =========================================================
@@ -520,28 +464,28 @@ COMMON AUDIT RISKS
 =========================================================
 
 ---------------------------------------------------------
-1. UNBOUNDED LOOPS
+1. UNBOUNDED STORAGE GROWTH
 ---------------------------------------------------------
 
-User-controlled iteration count.
+Arrays grow forever.
 
 ---------------------------------------------------------
-2. STORAGE INSIDE LOOP
+2. STORAGE WRITES INSIDE LOOPS
 ---------------------------------------------------------
 
-Massive gas explosion.
+Huge gas consumption.
 
 ---------------------------------------------------------
 3. GAS DOS
 ---------------------------------------------------------
 
-Function becomes impossible to execute.
+Functions become uncallable.
 
 ---------------------------------------------------------
-4. EXTERNAL CALLS INSIDE LOOP
+4. UNNECESSARY STORAGE
 ---------------------------------------------------------
 
-Extremely dangerous pattern.
+Wasted blockchain resources.
 
 =========================================================
 IMPORTANT ATTACK THINKING
@@ -550,50 +494,9 @@ IMPORTANT ATTACK THINKING
 Attackers may:
 
 - enlarge arrays
-- force massive loops
-- increase gas costs
+- force expensive writes
+- trigger gas exhaustion
 - DOS protocol execution
-
-=========================================================
-REAL AUDITOR PROCESS
-=========================================================
-
-Auditors estimate:
-
----------------------------------------------------------
-TIME COMPLEXITY
----------------------------------------------------------
-
-AND
-
----------------------------------------------------------
-GAS COMPLEXITY
----------------------------------------------------------
-
-=========================================================
-BIG-O THINKING
-=========================================================
-
-This loop complexity:
-
----------------------------------------------------------
-O(n)
----------------------------------------------------------
-
-Gas grows linearly with n.
-
-=========================================================
-WHY THIS MATTERS IN ETHEREUM
-=========================================================
-
-Ethereum has:
-
----------------------------------------------------------
-BLOCK GAS LIMITS
----------------------------------------------------------
-
-Too much execution =
-transaction failure.
 
 =========================================================
 SECURITY / AUDITOR MINDSET
@@ -601,11 +504,48 @@ SECURITY / AUDITOR MINDSET
 
 Auditors ask:
 
+- Does storage grow infinitely?
+- Are writes necessary?
+- Can attacker force writes?
 - Is loop bounded?
-- Can attacker increase n?
-- Are storage writes inside loop?
-- Is function scalable?
-- Could execution exceed gas limits?
+- Can gas exceed safe limits?
+
+=========================================================
+REAL AUDITOR PROCESS
+=========================================================
+
+Auditors analyze:
+
+---------------------------------------------------------
+STORAGE COMPLEXITY
+---------------------------------------------------------
+
+AND
+
+---------------------------------------------------------
+LONG-TERM SCALABILITY
+---------------------------------------------------------
+
+=========================================================
+WHY STORAGE OPTIMIZATION MATTERS
+=========================================================
+
+Storage costs REAL ETH.
+
+---------------------------------------------------------
+
+Bad storage design =
+expensive protocol.
+
+=========================================================
+BEST PRACTICES
+=========================================================
+
+- Minimize storage writes
+- Prefer memory when possible
+- Avoid large loops
+- Batch operations carefully
+- Limit array growth
 
 =========================================================
 MINI CHALLENGE
@@ -613,28 +553,28 @@ MINI CHALLENGE
 
 Modify contract so that:
 
-1. Loop 10,000 times
-2. Measure gas usage
-3. Remove storage writes
-4. Add external call inside loop
+1. Store 1000 values
+2. Compare gas usage
+3. Remove unnecessary writes
+4. Use struct arrays
 
 BONUS:
-Create batch-processing design.
+Create gas-optimized batch storage.
 
 =========================================================
 IMPORTANT CONCEPTS LEARNED
 =========================================================
 
-- Gas scales with iteration count
-- Storage writes are very expensive
-- Large loops may DOS contracts
-- O(n) execution impacts scalability
-- Ethereum has gas limits
-- Unbounded loops are dangerous
-- Storage-heavy loops are risky
-- Gas optimization matters heavily
-- Auditors inspect scalability carefully
-- Large loops create security risks
+- Storage writes are expensive
+- Arrays increase storage cost
+- Permanent blockchain data costs gas
+- Memory is cheaper than storage
+- Large arrays create scalability risk
+- Storage-heavy loops are dangerous
+- Ethereum charges for permanent state
+- Auditors inspect storage complexity
+- Gas optimization is critical
+- Unbounded storage growth is risky
 
 =========================================================
 */
@@ -643,138 +583,132 @@ IMPORTANT CONCEPTS LEARNED
 AUDIT REPORT
 
 Title:
-Unbounded Storage Growth Through Repeated Loop Execution
+Unbounded Storage Growth Through Repeated Array Expansion
 
-Security:
+Severity:
 Medium
 
 Category:
 Denial of Service (DoS) / Gas Scalability
 
 Affected Function:
-function loop1000()
+function storeManyValues()
 
 Description:
-The function performs 1000 storage writes on every execution:
-values.push(i);
-and
-totalIterations++;
+The function continuously appends values to a storage array:
 
-Although the loop is currently bounded to 1000 iterations, there is no mechanism limiting repeated execution.
-Each call permanently increases storage consumption.
-As contract state grows, execution becomes increasingly expensive and may eventually create operational and scalability issues.
+storedValues.push(i);
+Every execution permanently increases contract storage.
+Since there is no cleanup mechanism, size limit, or access restriction, repeated calls can grow storage indefinitely.
+Storage operations are among the most expensive EVM operations and may eventually make the contract increasingly expensive to use.
 
 Vulnerable Code:
 for (
 uint256 i = 0;
-i < 1000;
+i < 100;
 i++
 ) {
 
-sum += i;
-
-values.push(i);
-
-totalIterations++;
+storedValues.push(i);
+totalWrites++;
+lastStoredValue = i;
 
 }
 
 Impact:
 Current Impact:
-Very high gas consumption
-Permanent storage growth
+High gas consumption
+Large storage expansion
 
 Long-Term Impact:
-State bloat
-Increased execution costs
-Potential denial-of-service scenarios
-Reduced protocol scalability
+Permanent state bloat
+Increased execution cost
+Scalability degradation
+Potential gas-based denial of service
 
-Repeated execution:
+Example:
+Initial State:
+storedValues.length = 0
+
 Call #1:
-values.length = 1000
+storeManyValues()
+
+Result:
+storedValues.length = 100
 
 Call #2:
-values.length = 2000
-
-Call #3:
-values.length = 3000
-Storage grows forever.
-
-Proof of Concept
-Initial State:
-values.length = 0
-
-Execute:
-loop1000()
+storeManyValues()
 
 Result:
-values.length = 1000
+storedValues.length = 200
 
-Execute again:
-loop1000()
+Call #100:
+storeManyValues()
 
 Result:
-values.length = 2000
-Execute repeatedly:
-values.length continuously increases.
+storedValues.length = 10000
+Storage continues growing forever.
 
 Root Cause:
-Persistent storage writes occur inside a large loop:
-values.push(i);
-Storage is permanently expanded every execution.
+Persistent storage writes occur inside a loop:
+storedValues.push(i);
+The array is never cleared or bounded.
 
 Recommendation:
-Avoid storage writes inside large loops.
-Use memory variables whenever possible.
-Store only final aggregated results.
-Consider batch processing if storage is required.
+Avoid storing unnecessary values permanently.
+Use memory arrays when long-term storage is not required.
+
+If persistence is required:
+Add size limits
+Add cleanup mechanisms
+Batch writes carefully
 */
+
 
 //Patch Code
 
-contract GasScalingLoopPatched {
+contract StorageGasCostPatched {
 
-uint256 public totalIterations;
+uint256 public totalWrites;
 
-uint256 public finalSum;
+uint256 public lastStoredValue;
 
-function loop1000()
+function storeManyValues()
     external
 {
-    uint256 sum = 0;
-
-    uint256 iterations = 0;
+    uint256 writes = 0;
+    uint256 lastValue = 0;
 
     for (
         uint256 i = 0;
-        i < 1000;
+        i < 100;
         i++
     ) {
-        sum += i;
-
-        iterations++;
+        writes++;
+        lastValue = i;
     }
 
-    totalIterations += iterations;
-
-    finalSum = sum;
+    totalWrites += writes;
+    lastStoredValue = lastValue;
 }
 
-function optimizedLoop1000()
+function useMemoryArray()
     external
+    pure
+    returns (uint256[] memory)
 {
-    uint256 sum = 0;
+    uint256[] memory temp =
+        new uint256[](100);
 
     for (
         uint256 i = 0;
-        i < 1000;
+        i < 100;
         i++
     ) {
-        sum += i;
+        temp[i] = i;
     }
 
-    finalSum = sum;
+    return temp;
 }
 
 }

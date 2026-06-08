@@ -7,7 +7,7 @@
 		"abi": [
 			{
 				"inputs": [],
-				"name": "finalSum",
+				"name": "lastStoredValue",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -20,61 +20,35 @@
 			},
 			{
 				"inputs": [],
-				"name": "getArrayLength",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "loop1000",
+				"name": "storeManyValues",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
 				"inputs": [],
-				"name": "optimizedLoop1000",
-				"outputs": [],
-				"stateMutability": "nonpayable",
+				"name": "totalWrites",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
 				"inputs": [],
-				"name": "totalIterations",
+				"name": "useMemoryArray",
 				"outputs": [
 					{
-						"internalType": "uint256",
+						"internalType": "uint256[]",
 						"name": "",
-						"type": "uint256"
+						"type": "uint256[]"
 					}
 				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"name": "values",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
+				"stateMutability": "pure",
 				"type": "function"
 			}
 		],
@@ -91,7 +65,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"phase_2/67.sol": "GasScalingLoop"
+			"phase_2/68.sol": "StorageGasCostPatched"
 		},
 		"evmVersion": "osaka",
 		"libraries": {},
@@ -105,12 +79,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"phase_2/67.sol": {
-			"keccak256": "0x3243789cf5bc5bd8ffdb40cdd8f5fb393cbadb5f9ff4f872cdb68ca2be999ee9",
+		"phase_2/68.sol": {
+			"keccak256": "0x56d3d2a6220581a7cc78c074f303e5b92657725a2637d64a56bd8b80f83c580b",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://58fac6cf8600cb1c06a9b8ce48b87991e25e23d8af53889b912bc5ccdebed351",
-				"dweb:/ipfs/QmTLvLziuc1sMZG2FT8hEvpeVftG1FXARbDpeNJVsxdNij"
+				"bzz-raw://a9af1534bfc5829257b4533bedb2106af7bb7a1051043592c9f755d586365929",
+				"dweb:/ipfs/QmT5egSLNQc2TifbQVRqxx7yKiJ6NagrUH87sCAgE5bs88"
 			]
 		}
 	},
